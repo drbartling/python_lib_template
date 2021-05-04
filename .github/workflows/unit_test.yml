@@ -1,0 +1,43 @@
+name: Unit Tests
+
+on: [pull_request, push]
+
+jobs:
+  unit-test:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {name: Linux, python: '3.9', os: ubuntu-latest, tox: py39}
+          - {name: Windows, python: '3.9', os: windows-latest, tox: py39}
+          - {name: Mac, python: '3.9', os: macos-latest, tox: py39}
+          - {name: '3.8', python: '3.8', os: ubuntu-latest, tox: py38}
+          - {name: '2.7', python: '2.7', os: ubuntu-latest, tox: py27}
+
+    steps:
+      - name: Checkout repository under test
+        uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+
+      - run: python -m pip install --upgrade pip
+
+      - name: Python Versions
+        run: |
+          python --version
+          pip --version
+
+      - name: Install testing dependencies
+        uses: py-actions/py-dependency-install@v2
+        with:
+          path: "requirements.dev.txt"
+
+      - run: pip install tox
+
+      - name: Run pytest unit tests with tox
+        run: tox -e ${{ matrix.tox }}
