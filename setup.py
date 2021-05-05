@@ -6,4 +6,4 @@ import setuptools
 # This fills a different role from requirements.txt
 # https://packaging.python.org/discussions/install-requires-vs-requirements/
 
-setuptools.setup(name="hello", install_requires=["click"])
+setuptools.setup(name="hello", install_requires=[])
