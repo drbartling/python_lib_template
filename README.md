@@ -17,7 +17,7 @@ Template for a python library or module
   - [PyTest](#pytest)
 - [Dependencies](#dependencies)
 
-[*Table of contents generated with markdown-toc*](https://github.com/jonschlinkert/markdown-toc)
+[*Table of contents generated with `markdown-toc --no-firsth1 .\README.md`*](https://github.com/jonschlinkert/markdown-toc)
 
 ## About the Template
 
@@ -47,20 +47,16 @@ This repository follows [github-flow](https://guides.github.com/introduction/flo
 
 ### Before commiting
 
-Please, ensure code is formatted and tests are passing for any PR.
+Setup `pre-commit` to run before each commit.
 
-Tests use pytest and pytest coverage.
+```bash
+pip install pre-commit
+pre-commit install
+```
 
-- <https://docs.pytest.org/en/stable/>
-- <https://pypi.org/project/pytest-cov/>
+`pre-commit` performs the checks and actions defined in `.pre-commit-config.yaml`.
 
-Code is formatted using Black
-
-- <https://pypi.org/project/black/>
-
-Static analysis is performed with prospector
-
-- <https://pypi.org/project/prospector/>
+It's also a good idea to run the unit tests before commiting.  See [Running tests](#running-tests).
 
 ### Work in progress branches
 
@@ -125,12 +121,14 @@ Define the direct dependencies for the library in the `requirements.txt` but avo
 Periodically update the dependencies as follows:
 
 ```bash
-python -m virtualenv env
+python2 -m virtualenv env
 . env/bin/activate
 pip install -r requirements.txt
 pip install -r requirements.dev.in
 pip freeze > requirements.dev.txt
 ```
+
+If python 2 compatability is desired, make sure to perform the above steps using python 2.
 
 New repositories may want to consider using pip-compile: <https://github.com/jazzband/pip-tools#updating-requirements>
 
