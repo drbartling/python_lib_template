@@ -1,6 +1,7 @@
+import pytest
+
 import hello
 
-import pytest
 
 make_greeting_params = [
     ("World", False, "Hello, World!"),
